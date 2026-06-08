@@ -124,6 +124,3 @@ Server sẽ luôn trả về HTTP Status `200 OK` kèm JSON sau:
 - **Framework:** FastAPI (chạy trên cổng 8000)
 
 ---
-
-**Phiên bản:** v1.0  
-**Cập nhật lần cuối:** 2024
