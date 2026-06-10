@@ -5,7 +5,7 @@ import org.eclipse.paho.client.mqttv3.*
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
 
 class MqttManager(
-    private val serverUri: String = "tcp://broker.hivemc.com:1883",
+    private val serverUri: String = "tcp://broker.hivemq.com:1883",
     private val topic: String = "audio/chunks/stt",
     private val onMessage: (String) -> Unit,
     private val onStatusChange: (Boolean) -> Unit
@@ -32,11 +32,7 @@ class MqttManager(
                 override fun messageArrived(topic: String?, message: MqttMessage?) {
                     val payload = message?.toString() ?: return
                     try {
-                        val jsonObject = gson.fromJson(payload, JsonObject::class.java)
-                        val command = jsonObject.get("command")?.let {
-                            if (it.isJsonPrimitive) it.asString else null
-                        } ?: return
-                        onMessage(command)
+                        onMessage(payload)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }

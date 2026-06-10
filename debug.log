@@ -1,0 +1,116 @@
+[2026-06-10 14:06:57] DEBUG - Starting new HTTP connection (1): localhost:11434
+[2026-06-10 14:07:03] DEBUG - http://localhost:11434 "POST /api/generate HTTP/1.1" 200 None
+[2026-06-10 14:08:01] DEBUG - Starting new HTTP connection (1): localhost:11434
+[2026-06-10 14:08:04] DEBUG - http://localhost:11434 "POST /api/generate HTTP/1.1" 200 None
+[2026-06-10 14:13:48] DEBUG - Starting new HTTP connection (1): localhost:11434
+[2026-06-10 14:13:53] DEBUG - http://localhost:11434 "POST /api/generate HTTP/1.1" 200 None
+[2026-06-10 14:14:09] DEBUG - Starting new HTTP connection (1): localhost:11434
+[2026-06-10 14:14:12] DEBUG - http://localhost:11434 "POST /api/generate HTTP/1.1" 200 1997
+[2026-06-10 14:14:34] DEBUG - Starting new HTTP connection (1): localhost:11434
+[2026-06-10 14:14:37] DEBUG - http://localhost:11434 "POST /api/generate HTTP/1.1" 200 None
+[2026-06-10 14:14:54] DEBUG - Starting new HTTP connection (1): localhost:11434
+[2026-06-10 14:14:57] DEBUG - http://localhost:11434 "POST /api/generate HTTP/1.1" 200 2039
+[2026-06-10 14:20:32] INFO - ========== SERVER KHỞI ĐỘNG ==========
+[2026-06-10 14:20:32] INFO - Dang nap mo hinh Whisper vao RAM...
+[2026-06-10 14:20:34] INFO - Tải xong! Server đã sẵn sàng nhận lệnh.
+[2026-06-10 14:20:34] INFO - Server đang chạy tại: http://100.93.8.106:8000/api/voice
+[2026-06-10 14:21:04] INFO - Loading Whisper model...
+[2026-06-10 14:21:06] INFO - Using CPU
+[2026-06-10 14:21:06] INFO - Server ready!
+[2026-06-10 14:21:55] INFO - Loading Whisper model...
+[2026-06-10 14:21:57] INFO - Using CPU
+[2026-06-10 14:21:57] INFO - Server ready!
+[2026-06-10 14:22:25] INFO - Received: recording_20260610_142220.wav
+[2026-06-10 14:22:25] INFO - Transcribing...
+[2026-06-10 14:22:27] INFO - Text: Mặc nền biên cho tôi
+[2026-06-10 14:22:31] INFO - AI: non-op function
+[2026-06-10 14:22:31] INFO - Action: non-op function
+[2026-06-10 14:22:42] INFO - Received: recording_20260610_142238.wav
+[2026-06-10 14:22:42] INFO - Transcribing...
+[2026-06-10 14:22:50] INFO - Text: t Oprah T appears
+[2026-06-10 14:22:53] INFO - AI: timer
+[2026-06-10 14:22:53] INFO - Action: timer
+[2026-06-10 14:24:08] INFO - Received: recording_20260610_142404.wav
+[2026-06-10 14:24:08] INFO - Transcribing...
+[2026-06-10 14:24:11] INFO - Text: Hãy bật đoàn biên cho tôi.
+[2026-06-10 14:24:13] INFO - AI: flash
+[2026-06-10 14:24:13] INFO - Action: flash
+[2026-06-10 14:24:16] INFO - Loading Whisper model...
+[2026-06-10 14:24:17] INFO - Using CPU
+[2026-06-10 14:24:17] INFO - Server ready!
+[2026-06-10 14:24:33] INFO - Received: recording_20260610_142430.wav
+[2026-06-10 14:24:33] INFO - Transcribing...
+[2026-06-10 14:24:38] INFO - Text: Hãy bắt đầu em đi
+[2026-06-10 14:24:38] INFO - Saved: saved_recordings\recording_20260610_142438_recording_20260610_142430.wav
+[2026-06-10 14:24:41] INFO - AI: cam
+[2026-06-10 14:24:41] INFO - Action: cam
+[2026-06-10 14:30:22] INFO - Received: recording_20260610_143018.wav
+[2026-06-10 14:30:22] INFO - Transcribing...
+[2026-06-10 14:30:25] INFO - Text: Mặc đánh biên.
+[2026-06-10 14:30:25] INFO - Saved: saved_recordings\recording_20260610_143025_recording_20260610_143018.wav
+[2026-06-10 14:30:30] INFO - AI: non-op function
+[2026-06-10 14:30:30] INFO - Action: non-op function
+[2026-06-10 14:30:32] INFO - Loading Whisper model...
+[2026-06-10 14:30:35] INFO - Using CPU
+[2026-06-10 14:30:35] INFO - Server ready!
+[2026-06-10 14:30:36] INFO - Received: recording_20260610_143032.wav
+[2026-06-10 14:30:36] INFO - Transcribing...
+[2026-06-10 14:30:39] INFO - Text: bật đèn pin cho tôi.
+[2026-06-10 14:30:39] INFO - Saved: saved_recordings\recording_20260610_143039_recording_20260610_143032.wav
+[2026-06-10 14:30:41] INFO - AI: flash
+[2026-06-10 14:30:41] INFO - Action: flash
+[2026-06-10 14:30:48] INFO - Received: recording_20260610_143044.wav
+[2026-06-10 14:30:48] INFO - Transcribing...
+[2026-06-10 14:30:50] INFO - Text: Túng bật camera.
+[2026-06-10 14:30:50] INFO - Saved: saved_recordings\recording_20260610_143050_recording_20260610_143044.wav
+[2026-06-10 14:30:53] INFO - AI: cam
+[2026-06-10 14:30:53] INFO - Action: cam
+[2026-06-10 14:32:36] INFO - Received: recording_20260610_143231.wav
+[2026-06-10 14:32:36] INFO - Transcribing...
+[2026-06-10 14:32:37] INFO - Text: Turn on the flashlights.
+[2026-06-10 14:32:37] INFO - Saved: saved_recordings\recording_20260610_143237_recording_20260610_143231.wav
+[2026-06-10 14:32:39] INFO - AI: flash
+[2026-06-10 14:32:39] INFO - Action: flash
+[2026-06-10 14:32:42] INFO - Loading Whisper model...
+[2026-06-10 14:32:42] INFO - Using CPU
+[2026-06-10 14:32:42] INFO - Server ready!
+[2026-06-10 14:33:03] INFO - Received: recording_20260610_143259.wav
+[2026-06-10 14:33:03] INFO - Transcribing...
+[2026-06-10 14:33:04] INFO - Text: Turn on the camera.
+[2026-06-10 14:33:06] INFO - AI: cam
+[2026-06-10 14:33:06] INFO - Action: cam
+[2026-06-10 14:37:42] INFO - Loading Whisper model...
+[2026-06-10 14:37:43] INFO - Using CPU
+[2026-06-10 14:37:43] INFO - Server ready!
+[2026-06-10 14:39:05] INFO - Received: recording_20260610_143900.wav
+[2026-06-10 14:39:05] INFO - Transcribing...
+[2026-06-10 14:39:06] INFO - Text: Please turn on the flashlight.
+[2026-06-10 14:39:10] INFO - AI: flash
+[2026-06-10 14:39:10] INFO - Action: flash
+[2026-06-10 14:39:12] INFO - Loading Whisper model...
+[2026-06-10 14:39:13] INFO - Using CPU
+[2026-06-10 14:39:13] INFO - Server ready!
+[2026-06-10 14:40:36] INFO - Received: recording_20260610_144031.wav
+[2026-06-10 14:40:36] INFO - Transcribing...
+[2026-06-10 14:40:37] INFO - Text: Please turn on the flashlight.
+[2026-06-10 14:40:39] INFO - AI: flash
+[2026-06-10 14:40:39] INFO - Action: flash
+[2026-06-10 14:40:42] INFO - Loading Whisper model...
+[2026-06-10 14:40:42] INFO - Using CPU
+[2026-06-10 14:40:42] INFO - Server ready!
+[2026-06-10 14:41:13] INFO - Loading Whisper model...
+[2026-06-10 14:41:14] INFO - Using CPU
+[2026-06-10 14:41:14] INFO - Server ready!
+[2026-06-10 14:41:15] INFO - Received: recording_20260610_144111.wav
+[2026-06-10 14:41:15] INFO - Transcribing...
+[2026-06-10 14:41:16] INFO - Text: Please turn on the flash line.
+[2026-06-10 14:41:19] INFO - AI: flash
+[2026-06-10 14:41:19] INFO - Action: flash
+[2026-06-10 14:42:21] INFO - Received: recording_20260610_144216.wav
+[2026-06-10 14:42:21] INFO - Transcribing...
+[2026-06-10 14:42:22] INFO - Text: Bật camera cho tôi.
+[2026-06-10 14:42:25] INFO - AI: cam
+[2026-06-10 14:42:25] INFO - Action: cam
+[2026-06-10 14:42:27] INFO - Loading Whisper model...
+[2026-06-10 14:42:27] INFO - Using CPU
+[2026-06-10 14:42:27] INFO - Server ready!

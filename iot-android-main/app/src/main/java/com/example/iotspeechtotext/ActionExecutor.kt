@@ -17,13 +17,14 @@ import android.provider.AlarmClock
 class ActionExecutor(private val context: Context, private val scope: CoroutineScope) {
     private var isFlashOn = false
 
-    fun execute(command: String) {
+    fun execute(command: String, duration: Int = 0) {
         when (command) {
             "flash" -> toggleFlash()
             "cam" -> openCamera()
             "record" -> openRecorder()
             "timer" -> setTimer(duration)
             "non-op function" -> playBeepBeep()
+            else -> playBeepBeep()
         }
     }
 
@@ -62,7 +63,7 @@ class ActionExecutor(private val context: Context, private val scope: CoroutineS
 
     private fun setTimer(duration: Int) {
         try {
-            val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {\
+            val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
                 putExtra(AlarmClock.EXTRA_MESSAGE, "Smart AI Timer")
                 putExtra(AlarmClock.EXTRA_LENGTH, duration)
                 putExtra(AlarmClock.EXTRA_SKIP_UI, false)
