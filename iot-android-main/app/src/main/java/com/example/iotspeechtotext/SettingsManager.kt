@@ -12,8 +12,8 @@ class SettingsManager(context: Context) {
     companion object {
         private const val KEY_MQTT_URI = "mqtt_uri"
         private const val KEY_REST_URL = "rest_url"
-        private const val DEFAULT_MQTT_URI = "tcp://broker.hivemc.com:1883"
-        private const val DEFAULT_REST_URL = "http://192.168.1.100:8000"
+        private const val DEFAULT_MQTT_URI = "tcp://broker.hivemq.com:1883"
+        private const val DEFAULT_REST_URL = "http://100.93.8.106:8000"
     }
 
     fun getMqttUri(): String = prefs.getString(KEY_MQTT_URI, DEFAULT_MQTT_URI) ?: DEFAULT_MQTT_URI
