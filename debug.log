@@ -147,3 +147,207 @@
 [2026-06-10 16:25:49] INFO - Loading Whisper model...
 [2026-06-10 16:25:50] INFO - Using CPU
 [2026-06-10 16:25:50] INFO - Server ready!
+[2026-06-10 19:56:05] INFO - Loading Whisper model...
+[2026-06-10 19:56:05] INFO - Using CPU
+[2026-06-10 19:56:05] INFO - Server ready!
+[2026-06-10 19:56:07] INFO - Loading Whisper model...
+[2026-06-10 19:56:07] INFO - Using CPU
+[2026-06-10 19:56:07] INFO - Server ready!
+[2026-06-10 19:56:17] INFO - Received: recording_20260610_195612.wav
+[2026-06-10 19:56:17] INFO - Transcribing...
+[2026-06-10 19:56:19] INFO - Text: We just turn on the flashlight.
+[2026-06-10 19:56:24] INFO - AI: flash
+[2026-06-10 19:56:41] INFO - MQTT Published: {"action": "flash", "reply": "Flashlight turned on.", "duration": null}
+[2026-06-10 19:56:41] INFO - Action: flash
+[2026-06-10 19:56:41] INFO - Received: recording_20260610_195631.wav
+[2026-06-10 19:56:41] INFO - Transcribing...
+[2026-06-10 19:56:42] INFO - Text: Please turn on the flash night.
+[2026-06-10 19:56:44] INFO - AI: flash
+[2026-06-10 19:57:02] INFO - MQTT Published: {"action": "flash", "reply": "Flash turned on.", "duration": null}
+[2026-06-10 19:57:02] INFO - Action: flash
+[2026-06-10 20:02:40] INFO - Loading Whisper model...
+[2026-06-10 20:02:40] INFO - Using CPU
+[2026-06-10 20:02:40] INFO - Server ready!
+[2026-06-10 20:03:00] INFO - Received: recording_20260610_200255.wav
+[2026-06-10 20:03:00] INFO - Transcribing...
+[2026-06-10 20:03:01] INFO - Text: Please turn on the flashlights.
+[2026-06-10 20:03:25] INFO - MQTT Published: {"action": "flash", "reply": "Sure! Flashlight turned on.", "duration": null}
+[2026-06-10 20:03:25] INFO - Action: flash
+[2026-06-10 20:05:45] INFO - Received: recording_20260610_200541.wav
+[2026-06-10 20:05:45] INFO - Transcribing...
+[2026-06-10 20:05:46] INFO - Text: Let's turn on the flashlight.
+[2026-06-10 20:06:06] INFO - MQTT Published: {"action": "flash", "reply": "Flashlight turned on.", "duration": null}
+[2026-06-10 20:06:06] INFO - Action: flash
+[2026-06-10 20:20:43] INFO - Received: recording_20260610_202038.wav
+[2026-06-10 20:20:43] INFO - Transcribing...
+[2026-06-10 20:20:44] INFO - Text: Please turn on the flashlight.
+[2026-06-10 20:21:03] INFO - MQTT Published: {"action": "flash", "reply": "Flashlight turned on.", "duration": null}
+[2026-06-10 20:21:03] INFO - Action: flash
+[2026-06-10 20:22:15] ERROR - Failed to connect MQTT: [WinError 10061] No connection could be made because the target machine actively refused it
+[2026-06-10 20:22:15] INFO - Loading Whisper model...
+[2026-06-10 20:22:16] INFO - Using CPU
+[2026-06-10 20:22:16] INFO - Server ready!
+[2026-06-10 20:22:20] ERROR - Failed to connect MQTT: [WinError 10061] No connection could be made because the target machine actively refused it
+[2026-06-10 20:22:20] INFO - Loading Whisper model...
+[2026-06-10 20:22:21] INFO - Using CPU
+[2026-06-10 20:22:21] INFO - Server ready!
+[2026-06-10 20:22:33] ERROR - Failed to connect MQTT: [WinError 10061] No connection could be made because the target machine actively refused it
+[2026-06-10 20:22:33] INFO - Loading Whisper model...
+[2026-06-10 20:22:34] INFO - Using CPU
+[2026-06-10 20:22:34] INFO - Server ready!
+[2026-06-10 20:23:11] INFO - MQTT disconnected
+[2026-06-10 20:23:15] ERROR - Failed to connect MQTT: [WinError 10061] No connection could be made because the target machine actively refused it
+[2026-06-10 20:23:15] INFO - Loading Whisper model...
+[2026-06-10 20:23:15] INFO - Using CPU
+[2026-06-10 20:23:15] INFO - Server ready!
+[2026-06-10 20:23:25] INFO - Received: recording_20260610_202320.wav
+[2026-06-10 20:23:25] INFO - Transcribing...
+[2026-06-10 20:23:26] INFO - Text: Leskan on the flashlight.
+[2026-06-10 20:23:29] INFO - MQTT Published: {"action": "flash", "reply": "Flashlight turned on.", "duration": null}
+[2026-06-10 20:23:29] INFO - Action: flash
+[2026-06-10 20:26:00] INFO - Received: recording_20260610_202556.wav
+[2026-06-10 20:26:00] INFO - Transcribing...
+[2026-06-10 20:26:01] INFO - Text: Please turn on the flashlight.
+[2026-06-10 20:26:04] INFO - MQTT Published: {"action": "flash", "reply": "Turning on the flashlight.", "duration": null}
+[2026-06-10 20:26:04] INFO - Action: flash
+[2026-06-10 20:26:57] INFO - Received: recording_20260610_202652.wav
+[2026-06-10 20:26:57] INFO - Transcribing...
+[2026-06-10 20:26:58] INFO - Text: Listern on the flashlight.
+[2026-06-10 20:27:01] INFO - MQTT Published: {"action": "flash", "reply": "Flashlight listerned.", "duration": null}
+[2026-06-10 20:27:01] INFO - Action: flash
+[2026-06-10 20:33:52] INFO - Received: recording_20260610_203348.wav
+[2026-06-10 20:33:52] INFO - Transcribing...
+[2026-06-10 20:33:53] INFO - Text: Please turn on the flashlight.
+[2026-06-10 20:33:57] INFO - MQTT Published: {"action": "flash", "reply": "Light turned on.", "duration": null}
+[2026-06-10 20:33:57] INFO - Action: flash
+[2026-06-10 20:35:05] INFO - Received: recording_20260610_203500.wav
+[2026-06-10 20:35:05] INFO - Transcribing...
+[2026-06-10 20:35:06] INFO - Text: Please turn on the flashlight.
+[2026-06-10 20:35:08] INFO - MQTT Published: {"action": "flash", "reply": "Flashlight turned on.", "duration": null}
+[2026-06-10 20:35:08] INFO - Action: flash
+[2026-06-10 20:38:32] INFO - Received: recording_20260610_203827.wav
+[2026-06-10 20:38:32] INFO - Transcribing...
+[2026-06-10 20:38:33] INFO - Text: Play turn on the flashlight.
+[2026-06-10 20:38:36] INFO - MQTT Published: {"action": "flash", "reply": "Flashlight turned on.", "duration": null}
+[2026-06-10 20:38:36] INFO - Action: flash
+[2026-06-10 20:39:11] INFO - Received: recording_20260610_203906.wav
+[2026-06-10 20:39:11] INFO - Transcribing...
+[2026-06-10 20:39:12] INFO - Text: Blast on the flashlight.
+[2026-06-10 20:39:14] INFO - MQTT Published: {"action": "flash", "reply": "Flash on!", "duration": null}
+[2026-06-10 20:39:14] INFO - Action: flash
+[2026-06-10 20:39:39] INFO - Received: recording_20260610_203935.wav
+[2026-06-10 20:39:39] INFO - Transcribing...
+[2026-06-10 20:39:40] INFO - Text: Please turn on the flashlight.
+[2026-06-10 20:39:42] INFO - MQTT Published: {"action": "flash", "reply": "Got it!", "duration": null}
+[2026-06-10 20:39:42] INFO - Action: flash
+[2026-06-10 20:40:09] INFO - Received: recording_20260610_204005.wav
+[2026-06-10 20:40:09] INFO - Transcribing...
+[2026-06-10 20:40:11] INFO - Text: Liste item?
+[2026-06-10 20:40:14] INFO - MQTT Published: {"action": "non-op function", "reply": "Please specify what you would like to list.", "duration": null}
+[2026-06-10 20:40:14] INFO - Action: non-op function
+[2026-06-10 20:49:43] INFO - MQTT disconnected
+[2026-06-10 20:49:45] INFO - Loading Whisper model...
+[2026-06-10 20:49:45] INFO - Using CPU
+[2026-06-10 20:49:45] INFO - Server ready!
+[2026-06-10 20:49:48] ERROR - Failed to connect MQTT: [WinError 10061] No connection could be made because the target machine actively refused it
+[2026-06-10 20:54:00] INFO - MQTT disconnected
+[2026-06-10 20:54:02] INFO - Loading Whisper model...
+[2026-06-10 20:54:03] INFO - Using CPU
+[2026-06-10 20:54:03] INFO - Server ready!
+[2026-06-10 20:54:03] INFO - MQTT client persistent loop started.
+[2026-06-10 20:54:03] INFO - ✅ MQTT connected to private broker successfully
+[2026-06-10 20:54:26] INFO - MQTT connection gracefully closed.
+[2026-06-10 20:54:28] INFO - Loading Whisper model...
+[2026-06-10 20:54:29] INFO - Using CPU
+[2026-06-10 20:54:29] INFO - Server ready!
+[2026-06-10 20:54:29] INFO - MQTT client persistent loop started.
+[2026-06-10 20:54:29] INFO - ✅ MQTT connected to private broker successfully
+[2026-06-10 20:54:43] INFO - MQTT connection gracefully closed.
+[2026-06-10 20:54:45] INFO - Loading Whisper model...
+[2026-06-10 20:54:45] INFO - Using CPU
+[2026-06-10 20:54:45] INFO - Server ready!
+[2026-06-10 20:54:45] INFO - MQTT client persistent loop started.
+[2026-06-10 20:54:45] INFO - ✅ MQTT connected to private broker successfully
+[2026-06-10 20:55:18] INFO - Received: recording_20260610_205514.wav
+[2026-06-10 20:55:18] INFO - Transcribing...
+[2026-06-10 20:55:20] INFO - Text: Release camera on a satellite.
+[2026-06-10 20:55:24] INFO - MQTT Published: {"action": "cam", "reply": "Camera release confirmed.", "duration": null}
+[2026-06-10 20:55:24] INFO - Action: cam
+[2026-06-10 20:57:44] INFO - MQTT connection gracefully closed.
+[2026-06-10 20:57:45] INFO - Loading Whisper model...
+[2026-06-10 20:57:46] INFO - Using CPU
+[2026-06-10 20:57:46] INFO - Server ready!
+[2026-06-10 20:58:01] INFO - MQTT client persistent loop started.
+[2026-06-10 20:58:02] INFO - ✅ MQTT connected to private broker successfully
+[2026-06-10 20:59:14] INFO - Received: recording_20260610_205908.wav
+[2026-06-10 20:59:14] INFO - Transcribing...
+[2026-06-10 20:59:15] INFO - Text: Please turn on the flashlight.
+[2026-06-10 20:59:17] INFO - MQTT Published: {"action": "flash", "reply": "Turning on the flashlight.", "duration": null}
+[2026-06-10 20:59:17] INFO - Action: flash
+[2026-06-10 21:07:52] INFO - Received: recording_20260610_210749.wav
+[2026-06-10 21:07:52] INFO - Transcribing...
+[2026-06-10 21:07:53] INFO - Text: Turn on flash light.
+[2026-06-10 21:07:57] INFO - MQTT Published: {"action": "flash", "reply": "Flashlight turned on.", "duration": null}
+[2026-06-10 21:07:57] INFO - Action: flash
+[2026-06-10 21:17:02] INFO - Received: recording_20260610_211657.wav
+[2026-06-10 21:17:02] INFO - Transcribing...
+[2026-06-10 21:17:03] INFO - Text: Please turn on the camera.
+[2026-06-10 21:17:07] INFO - MQTT Published: {"action": "cam", "reply": "Camera turned on.", "duration": null}
+[2026-06-10 21:17:07] INFO - Action: cam
+[2026-06-10 21:32:25] INFO - Received: recording_20260610_213216.wav
+[2026-06-10 21:32:25] INFO - Transcribing...
+[2026-06-10 21:32:27] INFO - Text: Please turn on the flashlight.
+[2026-06-10 21:32:31] INFO - MQTT Published: {"action": "flash", "reply": "Turned on the flashlight.", "duration": null}
+[2026-06-10 21:32:31] INFO - Action: flash
+[2026-06-10 23:02:20] INFO - Received: recording_20260610_230216.m4a
+[2026-06-10 23:02:20] INFO - Transcribing...
+[2026-06-10 23:02:21] INFO - Text: Please turn on the camera.
+[2026-06-10 23:02:26] INFO - MQTT Published: {"action": "cam", "reply": "Camera turned on.", "duration": null}
+[2026-06-10 23:02:26] INFO - Action: cam
+[2026-06-10 23:06:37] INFO - Received: recording_20260610_230635.m4a
+[2026-06-10 23:06:37] INFO - Transcribing...
+[2026-06-10 23:06:38] INFO - Text: Please turn on the flashlight.
+[2026-06-10 23:06:40] INFO - MQTT Published: {"action": "flash", "reply": "Okay! The flashlight is turned on.", "duration": null}
+[2026-06-10 23:06:40] INFO - Action: flash
+[2026-06-10 23:06:49] INFO - Received: recording_20260610_230647.m4a
+[2026-06-10 23:06:49] INFO - Transcribing...
+[2026-06-10 23:06:50] INFO - Text: Please turn on the camera.
+[2026-06-10 23:06:52] INFO - MQTT Published: {"action": "cam", "reply": "Camera turned on.", "duration": null}
+[2026-06-10 23:06:52] INFO - Action: cam
+[2026-06-10 23:13:22] INFO - MQTT connection gracefully closed.
+[2026-06-10 23:13:25] INFO - Loading Whisper model...
+[2026-06-10 23:13:25] INFO - Using CPU
+[2026-06-10 23:13:25] INFO - Server ready!
+[2026-06-10 23:13:41] INFO - MQTT client persistent loop started.
+[2026-06-10 23:13:41] INFO - ✅ MQTT connected to private broker successfully
+[2026-06-10 23:14:13] INFO - MQTT connection gracefully closed.
+[2026-06-10 23:14:15] INFO - Loading Whisper model...
+[2026-06-10 23:14:16] INFO - Using CPU
+[2026-06-10 23:14:16] INFO - Server ready!
+[2026-06-10 23:14:31] INFO - MQTT client persistent loop started.
+[2026-06-10 23:14:31] INFO - ✅ MQTT connected to private broker successfully
+[2026-06-10 23:16:17] INFO - Received: recording_20260610_231615.m4a
+[2026-06-10 23:16:17] INFO - Transcribing...
+[2026-06-10 23:16:18] INFO - Text: Please turn on the flashlight.
+[2026-06-10 23:16:22] INFO - MQTT Published: {"action": "flash_on", "reply": "The flashlight has been turned on.", "duration": null}
+[2026-06-10 23:16:22] INFO - Action: flash_on
+[2026-06-10 23:16:30] INFO - Received: recording_20260610_231628.m4a
+[2026-06-10 23:16:30] INFO - Transcribing...
+[2026-06-10 23:16:31] INFO - Text: Please turn off the flashlight.
+[2026-06-10 23:16:34] INFO - MQTT Published: {"action": "flash_off", "reply": "Flashlight turned off.", "duration": null}
+[2026-06-10 23:16:34] INFO - Action: flash_off
+[2026-06-10 23:18:06] INFO - Received: recording_20260610_231804.m4a
+[2026-06-10 23:18:06] INFO - Transcribing...
+[2026-06-10 23:18:06] INFO - Text: Please turn on the flashlight.
+[2026-06-10 23:18:09] INFO - MQTT Published: {"action": "flash_on", "reply": "The flashlight is ON.", "duration": null}
+[2026-06-10 23:18:09] INFO - Action: flash_on
+[2026-06-10 23:18:14] INFO - Received: recording_20260610_231813.m4a
+[2026-06-10 23:18:14] INFO - Transcribing...
+[2026-06-10 23:18:15] INFO - Text: Please turn out the flash light.
+[2026-06-10 23:18:18] INFO - MQTT Published: {"action": "flash_off", "reply": "Flashlight is off.", "duration": null}
+[2026-06-10 23:18:18] INFO - Action: flash_off
+[2026-06-10 23:18:23] INFO - Received: recording_20260610_231822.m4a
+[2026-06-10 23:18:23] INFO - Transcribing...
+[2026-06-10 23:18:24] INFO - Text: Please open the camera.
+[2026-06-10 23:18:27] INFO - MQTT Published: {"action": "cam", "reply": "Camera opened.", "duration": null}
+[2026-06-10 23:18:27] INFO - Action: cam

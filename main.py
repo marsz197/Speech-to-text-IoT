@@ -11,6 +11,7 @@ from datetime import datetime
 from fastapi import FastAPI, UploadFile, File
 from pydantic import BaseModel
 import paho.mqtt.client as mqtt
+
 # ============= FIX UNICODE ENCODING TRÊN WINDOWS =============
 class UTF8StreamHandler(logging.StreamHandler):
     def __init__(self, stream=None):
@@ -20,7 +21,6 @@ class UTF8StreamHandler(logging.StreamHandler):
     def emit(self, record):
         try:
             msg = self.format(record)
-            # Encode to UTF-8 explicitly
             if isinstance(msg, str):
                 msg = msg.encode('utf-8', errors='ignore').decode('utf-8')
             stream = self.stream
@@ -61,7 +61,6 @@ print("-" * 50)
 
 logger.info("Loading Whisper model...")
 try:
-    # Try GPU acceleration (fp16 faster than fp32)
     stt_model = whisper.load_model("base", device="cuda")
     logger.info("Using CUDA")
 except:
@@ -86,7 +85,7 @@ async def process_voice_command(file: UploadFile = File(...)):
             temp_file_path, 
             verbose=False,
             fp16=True,
-            initial_prompt="bật đèn pin, flash on, bật camera, open camera, bắt đầu ghi âm, record, hẹn giờ, timer, đếm ngược giây.",
+            initial_prompt="bật đèn pin, flash on, tắt đèn pin, flash off, bật camera, open camera, bắt đầu ghi âm, record, hẹn giờ, timer, đếm ngược giây.",
             condition_on_previous_text=False,
             no_speech_threshold=0.6
         )
@@ -128,9 +127,11 @@ class CommandRequest(BaseModel):
 def process_command(request: CommandRequest):
     input_text = request.text
     
-    # Optimized prompt (shorter = faster)
     prompt = f"""Analyze this command and return JSON with 'action', 'duration' (if timer), and 'reply'.
-Actions: flash, record, timer, cam, non-op function
+Actions: flash_on, flash_off, record, timer, cam, non-op function
+Rules for actions:
+- If the user wants to turn ON/open the flashlight/flash, use 'flash_on'.
+- If the user wants to turn OFF/close the flashlight/flash, use 'flash_off'.
 - 'reply': Write a short confirmation message (below 10 words). Importance: the confirmation message must be concise and clear, match with the language of the input, directly related to the action, and should not include any additional information or explanations. It should be a simple acknowledgment of the action taken.
 Command: {input_text}
 Return ONLY JSON."""
@@ -148,25 +149,24 @@ Return ONLY JSON."""
         )
         
         result_json = json.loads(response.json()["response"])
-        logger.info(f"AI: {result_json.get('action')}")
         action_code = result_json.get("action", "non-op function")
         duration = result_json.get("duration", 0)
         reply_text = result_json.get("reply", "Đã xử lý / Processed")
-        final_dict ={
+        
+        final_dict = {
             "action": action_code,
             "reply": reply_text,
             "duration": duration
         }  
-        #MQTT command
+        
+        # Publish to MQTT bằng kết nối persistent có sẵn
         try:
-            mqtt_client = mqtt.Client()
-            mqtt_client.connect("broker.hivemq.com", 1883, 2)
-            payload_str = json.dumps(final_dict,ensure_ascii=False)
-            mqtt_client.publish("audio/chunks/stt", payload_str)
-            mqtt_client.disconnect()
+            payload_str = json.dumps(final_dict, ensure_ascii=False)
+            mqtt_client.publish("audio/response", payload_str)
             logger.info(f"MQTT Published: {payload_str}")
         except Exception as e:
             logger.error(f"MQTT error: {e}")      
+            
         return final_dict
         
     except Exception as e:
@@ -176,3 +176,36 @@ Return ONLY JSON."""
             "reply": "System error. Please try again.",
             "duration": 0
         }
+
+# ========================================================
+# KHỞI TẠO VÀ DUY TRÌ KẾT NỐI PERSISTENT MQTT (MOSQUITTO)
+# ========================================================
+mqtt_client = mqtt.Client()
+
+def on_mqtt_connect(client, userdata, flags, rc):
+    if rc == 0:
+        logger.info("✅ MQTT connected to private broker successfully")
+    else:
+        logger.error(f"❌ MQTT connection failed with code: {rc}")
+
+def on_mqtt_disconnect(client, userdata, rc):
+    if rc != 0:
+        logger.warning(f"⚠️ Unexpected MQTT disconnection: {rc}")
+
+mqtt_client.on_connect = on_mqtt_connect
+mqtt_client.on_disconnect = on_mqtt_disconnect
+
+try:
+    # Vì Mosquitto chạy chung máy với FastAPI nên trỏ thẳng về localhost (127.0.0.1) là chuẩn nhất
+    mqtt_client.connect("broker.hivemq.com", 1883, keepalive=60)
+    mqtt_client.loop_start()  # Bật luồng ngầm duy trì kết nối liên tục
+    logger.info("MQTT client persistent loop started.")
+except Exception as e:
+    logger.error(f"Failed to initialize MQTT connection: {e}")
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Đóng kết nối an toàn khi tắt server"""
+    mqtt_client.loop_stop()
+    mqtt_client.disconnect()
+    logger.info("MQTT connection gracefully closed.")

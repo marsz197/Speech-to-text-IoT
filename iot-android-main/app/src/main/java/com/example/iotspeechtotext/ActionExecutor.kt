@@ -19,7 +19,9 @@ class ActionExecutor(private val context: Context, private val scope: CoroutineS
 
     fun execute(command: String, duration: Int = 0) {
         when (command) {
-            "flash" -> toggleFlash()
+            "flash_on" -> setFlashlight(true)
+            "flash_off" -> setFlashlight(false)
+            "flash" -> setFlashlight(!isFlashOn)
             "cam" -> openCamera()
             "record" -> openRecorder()
             "timer" -> setTimer(duration)
@@ -28,11 +30,11 @@ class ActionExecutor(private val context: Context, private val scope: CoroutineS
         }
     }
 
-    private fun toggleFlash() {
+    private fun setFlashlight(status: Boolean) {
         try {
             val cameraManager = context.getSystemService(Context.CAMERA_SERVICE) as CameraManager
             val cameraId = cameraManager.cameraIdList.firstOrNull() ?: return
-            isFlashOn = !isFlashOn
+            isFlashOn = status
             cameraManager.setTorchMode(cameraId, isFlashOn)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -63,12 +65,12 @@ class ActionExecutor(private val context: Context, private val scope: CoroutineS
 
     private fun setTimer(duration: Int) {
         try {
-            val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
-                putExtra(AlarmClock.EXTRA_MESSAGE, "Smart AI Timer")
+            val intent = Intent(AlarmClock.ACTION_SET_TIMER).apply {
                 putExtra(AlarmClock.EXTRA_LENGTH, duration)
                 putExtra(AlarmClock.EXTRA_SKIP_UI, false)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
             context.startActivity(intent)
         } catch (e: Exception) {
             e.printStackTrace()

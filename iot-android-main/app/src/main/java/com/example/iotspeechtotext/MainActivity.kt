@@ -1,9 +1,13 @@
 package com.example.iotspeechtotext
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Mic
@@ -13,7 +17,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.gson.JsonObject
 import org.json.JSONObject
@@ -33,6 +39,7 @@ class MainActivity : ComponentActivity() {
         settingsManager = SettingsManager(this)
         
         setContent {
+            val context = LocalContext.current
             var status by remember { mutableStateOf("Disconnected") }
             var lastAction by remember { mutableStateOf("None") }
             var lastRecognizedText by remember { mutableStateOf("") }
@@ -42,6 +49,47 @@ class MainActivity : ComponentActivity() {
             var showDialog by remember { mutableStateOf(false) }
             var isRecording by remember { mutableStateOf(false) }
             var recordingIndicator by remember { mutableStateOf("") }
+            var isWaitingForResponse by remember { mutableStateOf(false) }
+            var responseTimeout by remember { mutableStateOf(false) }
+
+            // Permission Launcher
+            val permissionLauncher = rememberLauncherForActivityResult(
+                ActivityResultContracts.RequestMultiplePermissions()
+            ) { permissions ->
+                val recordGranted = permissions[Manifest.permission.RECORD_AUDIO] ?: false
+                val cameraGranted = permissions[Manifest.permission.CAMERA] ?: false
+                if (!recordGranted) {
+                    lastRecognizedText = "❌ Quyền ghi âm bị từ chối"
+                }
+            }
+
+            // Function to check and request permissions
+            val checkAndRequestPermissions = {
+                val permissionsToRequest = mutableListOf<String>()
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                    permissionsToRequest.add(Manifest.permission.RECORD_AUDIO)
+                }
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    permissionsToRequest.add(Manifest.permission.CAMERA)
+                }
+
+                if (permissionsToRequest.isNotEmpty()) {
+                    permissionLauncher.launch(permissionsToRequest.toTypedArray())
+                    false
+                } else {
+                    true
+                }
+            }
+
+            // Timeout handler for MQTT response (30 seconds)
+            LaunchedEffect(isWaitingForResponse) {
+                if (isWaitingForResponse) {
+                    kotlinx.coroutines.delay(30000) // 30 seconds
+                    isWaitingForResponse = false
+                    responseTimeout = true
+                    lastRecognizedText = "⏱️ Timeout! Server không trả về kết quả sau 30s"
+                }
+            }
 
             // Initialize MQTT Manager
             DisposableEffect(serverUri) {
@@ -50,19 +98,46 @@ class MainActivity : ComponentActivity() {
                     onMessage = { cmd ->
                         runOnUiThread {
                             try{
+                                Log.d("MainActivity", "📨 MQTT message received: $cmd")
                                 val json = JSONObject(cmd)
-                                lastAction = cmd
+                                
+                                // Clear timeout if waiting for response
+                                if (isWaitingForResponse) {
+                                    isWaitingForResponse = false
+                                    responseTimeout = false
+                                    lastRecognizedText = "" // Clear error messages
+                                    Log.d("MainActivity", "✅ Response received, timeout cleared")
+                                }
                                 val duration = json.optInt("duration", 0)
-                                actionExecutor.execute(cmd, duration)
+                                val action = json.optString("action", "non-op function")
+                                val recognized = json.optString("recognized_text", "")
+                                val reply = json.optString("reply", "")
+                                lastAction = when(action) {
+                                    "flash_on" -> "Turn On Flash"
+                                    "flash_off" -> "Turn Off Flash"
+                                    "cam" -> "Open Camera"
+                                    "record" -> "Open Recorder"
+                                    "timer" -> "Set Timer ($duration seconds)"
+                                    else -> "Unknown Action"
+                                }
+                                // Cập nhật UI với MQTT response
+                                lastRecognizedText = buildString {
+                                    if (recognized.isNotEmpty()) append("Recognized: $recognized\n")
+                                    if (reply.isNotEmpty()) append("Reply: $reply")
+                                }.trim()
+                                
+                                Log.d("MainActivity", "✅ Action=$action, Reply=$reply")
+                                actionExecutor.execute(action, duration)
                             }
                             catch(e: Exception){
-                                lastAction = cmd
-                                actionExecutor.execute(cmd, 0)
+                                Log.e("MainActivity", "❌ MQTT parse error: ${e.message}", e)
+                                actionExecutor.execute("non-op function", 0)
                                 e.printStackTrace()
                             }
                         }
                     },
                     onStatusChange = { isConnected ->
+                        Log.d("MainActivity", "📡 MQTT connection status changed: ${if (isConnected) "Connected" else "Disconnected"}")
                         runOnUiThread {
                             status = if (isConnected) "Connected" else "Disconnected"
                         }
@@ -80,30 +155,16 @@ class MainActivity : ComponentActivity() {
             LaunchedEffect(serverRestUrl) {
                 speechToTextClient = SpeechToTextClient(
                     serverUrl = serverRestUrl,
-                    onResponse = { response ->
-                        val action = response.get("action")?.asString ?: "non-op function"
-                        val reply = response.get("reply")?.asString ?: ""
-                        val recognized = response.get("recognized_text")?.asString ?: ""
-                        
+                    onSendSuccess = {
                         runOnUiThread {
-                            lastAction = " $action"
-                            lastRecognizedText = "Recognized: $recognized\nReply: $reply"
-                            
-                            // Thực thi lệnh từ server
-                            try {
-                                val json = JSONObject()
-                                json.put("action", action)
-                                val duration = response.get("duration")?.asInt ?: 0
-                                actionExecutor.execute(json.toString(), duration)
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                            }
+                            Log.d("MainActivity", "✅ Audio file sent successfully, waiting for MQTT response...")
+                            lastRecognizedText = "⏳ Đã gửi file, chờ kết quả từ MQTT..."
                         }
                     },
                     onError = { error ->
                         runOnUiThread {
+                            Log.e("MainActivity", "❌ Send error: $error")
                             lastRecognizedText = error
-                            Log.e("MainActivity", error)
                         }
                     }
                 )
@@ -159,12 +220,14 @@ class MainActivity : ComponentActivity() {
                         if (!isRecording) {
                             Button(
                                 onClick = {
-                                    if (audioRecorder.startRecording()) {
-                                        isRecording = true
-                                        recordingIndicator = "●"
-                                        Log.d("MainActivity", "🎤 Bắt đầu ghi âm")
-                                    } else {
-                                        lastRecognizedText = "❌ Không thể bắt đầu ghi âm"
+                                    if (checkAndRequestPermissions()) {
+                                        if (audioRecorder.startRecording()) {
+                                            isRecording = true
+                                            recordingIndicator = "●"
+                                            Log.d("MainActivity", "🎤 Bắt đầu ghi âm")
+                                        } else {
+                                            lastRecognizedText = "❌ Không thể bắt đầu ghi âm"
+                                        }
                                     }
                                 },
                                 modifier = Modifier.width(200.dp),
@@ -183,7 +246,11 @@ class MainActivity : ComponentActivity() {
                                     Log.d("MainActivity", "⏹️ Dừng ghi âm")
                                     
                                     if (audioFile != null && audioFile.exists()) {
-                                        lastRecognizedText = "✅ Ghi âm xong, đang gửi..."
+                                        Log.d("MainActivity", "📤 Sending audio file (${audioFile.length()} bytes) to $serverRestUrl/api/voice")
+                                        lastRecognizedText = "📡 Gửi audio via REST API, chờ kết quả từ MQTT..."
+                                        responseTimeout = false
+                                        isWaitingForResponse = true
+                                        Log.d("MainActivity", "⏱️ Timeout timer started (30s)")
                                         speechToTextClient?.sendAudioFile(audioFile)
                                     }
                                 },

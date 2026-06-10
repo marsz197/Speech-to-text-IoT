@@ -1,19 +1,16 @@
 package com.example.iotspeechtotext
 
 import android.util.Log
-import com.google.gson.Gson
-import com.google.gson.JsonObject
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import java.io.File
 
 class SpeechToTextClient(
     private val serverUrl: String,
-    private val onResponse: (JsonObject) -> Unit,
+    private val onSendSuccess: () -> Unit,
     private val onError: (String) -> Unit
 ) {
     private val client = OkHttpClient()
-    private val gson = Gson()
 
     fun sendAudioFile(audioFile: File) {
         try {
@@ -43,23 +40,15 @@ class SpeechToTextClient(
                 override fun onResponse(call: Call, response: Response) {
                     try {
                         if (response.isSuccessful) {
-                            val responseBody = response.body?.string() ?: ""
-                            val jsonObject = gson.fromJson(responseBody, JsonObject::class.java)
-                            
-                            val action = jsonObject.get("action")?.asString ?: "non-op function"
-                            val reply = jsonObject.get("reply")?.asString ?: "Không có phản hồi"
-                            val recognizedText = jsonObject.get("recognized_text")?.asString ?: ""
-                            
-                            Log.d("STT", "✅ Phản hồi: action=$action, recognized='$recognizedText'")
-                            
-                            onResponse(jsonObject)
+                            Log.d("STT", "✅ File được gửi thành công, chờ kết quả từ MQTT...")
+                            onSendSuccess()
                         } else {
                             val errorMsg = "❌ Lỗi server: ${response.code}"
                             Log.e("STT", errorMsg)
                             onError(errorMsg)
                         }
                     } catch (e: Exception) {
-                        val errorMsg = "❌ Lỗi parse response: ${e.message}"
+                        val errorMsg = "❌ Lỗi: ${e.message}"
                         Log.e("STT", errorMsg)
                         onError(errorMsg)
                     }

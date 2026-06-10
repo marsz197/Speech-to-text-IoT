@@ -21,7 +21,7 @@ class AudioRecorder(private val context: Context) {
             }
 
             val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
-            audioFile = File(audioDir, "recording_$timestamp.wav")
+            audioFile = File(audioDir, "recording_$timestamp.m4a")
 
             // Cấu hình MediaRecorder
             mediaRecorder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -33,8 +33,8 @@ class AudioRecorder(private val context: Context) {
 
             mediaRecorder?.apply {
                 setAudioSource(MediaRecorder.AudioSource.MIC)
-                setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-                setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+                setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+                setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
                 setOutputFile(audioFile!!.absolutePath)
                 setAudioSamplingRate(16000)
                 setAudioEncodingBitRate(128000)
