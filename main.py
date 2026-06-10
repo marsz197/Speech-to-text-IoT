@@ -5,13 +5,12 @@ import os
 import shutil
 import whisper
 import subprocess
-import socket
 import logging
 import sys
 from datetime import datetime
 from fastapi import FastAPI, UploadFile, File
 from pydantic import BaseModel
-
+import paho.mqtt.client as mqtt
 # ============= FIX UNICODE ENCODING TRÊN WINDOWS =============
 class UTF8StreamHandler(logging.StreamHandler):
     def __init__(self, stream=None):
@@ -151,13 +150,24 @@ Return ONLY JSON."""
         result_json = json.loads(response.json()["response"])
         logger.info(f"AI: {result_json.get('action')}")
         action_code = result_json.get("action", "non-op function")
-        duration = result_json.get("duration", None)
-        reply_text = result_json.get("reply", "Đã xử lý / Processed")        
-        return {
+        duration = result_json.get("duration", 0)
+        reply_text = result_json.get("reply", "Đã xử lý / Processed")
+        final_dict ={
             "action": action_code,
             "reply": reply_text,
             "duration": duration
-        }
+        }  
+        #MQTT command
+        try:
+            mqtt_client = mqtt.Client()
+            mqtt_client.connect("broker.hivemq.com", 1883, 2)
+            payload_str = json.dumps(final_dict,ensure_ascii=False)
+            mqtt_client.publish("audio/chunks/stt", payload_str)
+            mqtt_client.disconnect()
+            logger.info(f"MQTT Published: {payload_str}")
+        except Exception as e:
+            logger.error(f"MQTT error: {e}")      
+        return final_dict
         
     except Exception as e:
         logger.error(f"AI error: {e}")

@@ -114,3 +114,36 @@
 [2026-06-10 14:42:27] INFO - Loading Whisper model...
 [2026-06-10 14:42:27] INFO - Using CPU
 [2026-06-10 14:42:27] INFO - Server ready!
+[2026-06-10 14:46:55] INFO - Loading Whisper model...
+[2026-06-10 14:46:56] INFO - Using CPU
+[2026-06-10 14:46:56] INFO - Server ready!
+[2026-06-10 15:06:40] INFO - Loading Whisper model...
+[2026-06-10 15:06:41] INFO - Using CPU
+[2026-06-10 15:06:41] INFO - Server ready!
+[2026-06-10 15:06:42] INFO - Loading Whisper model...
+[2026-06-10 15:06:43] INFO - Using CPU
+[2026-06-10 15:06:43] INFO - Server ready!
+[2026-06-10 15:07:39] INFO - Received: output.wav
+[2026-06-10 15:07:39] INFO - Transcribing...
+[2026-06-10 15:07:42] INFO - Text: Dao.
+[2026-06-10 15:07:46] INFO - AI: cam
+[2026-06-10 15:08:01] INFO - MQTT Published: {"action": "cam", "reply": "Action completed.", "duration": null}
+[2026-06-10 15:08:01] INFO - Action: cam
+[2026-06-10 15:10:48] INFO - Received: output.wav
+[2026-06-10 15:10:48] INFO - Transcribing...
+[2026-06-10 15:10:49] INFO - Text: Mở cam cho tôi bật.
+[2026-06-10 15:10:52] INFO - AI: cam
+[2026-06-10 15:11:07] INFO - MQTT Published: {"action": "cam", "reply": "Tôi đã mở camera và đang chuẩn bị để bạn có thể bắt được các khoảnh khắc. Hãy chụp nếu bạn muốn!", "duration": null}
+[2026-06-10 15:11:07] INFO - Action: cam
+[2026-06-10 15:12:13] INFO - Received: output.wav
+[2026-06-10 15:12:13] INFO - Transcribing...
+[2026-06-10 15:12:13] INFO - Text: Please turn on flash light.
+[2026-06-10 15:12:16] INFO - AI: flash
+[2026-06-10 15:12:31] INFO - MQTT Published: {"action": "flash", "reply": "Turned on flashlight.", "duration": null}
+[2026-06-10 15:12:31] INFO - Action: flash
+[2026-06-10 16:25:47] INFO - Loading Whisper model...
+[2026-06-10 16:25:47] INFO - Using CPU
+[2026-06-10 16:25:47] INFO - Server ready!
+[2026-06-10 16:25:49] INFO - Loading Whisper model...
+[2026-06-10 16:25:50] INFO - Using CPU
+[2026-06-10 16:25:50] INFO - Server ready!
