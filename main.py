@@ -3,24 +3,24 @@ import requests
 import os
 import shutil
 import whisper
+import subprocess
 import socket
 from fastapi import FastAPI, UploadFile, File
 from pydantic import BaseModel
 
 app = FastAPI()
-def get_local_ip():
+def get_tailscale_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
-        # Kết nối giả lập để kích hoạt card mạng lấy IP thực tế (không tốn lưu lượng mạng)
-        s.connect(('8.8.8.8', 1))
-        ip = s.getsockname()[0]
+        result = subprocess.run(['tailscale', 'ip', '-4'], capture_output=True, text=True, check=True, cwd=None)
+        return result.stdout.strip()
     except Exception:
-        ip = '127.0.0.1'
-    finally:
-        s.close()
-    return ip
+        return '127.0.0.1 (Tailscale IP not found)'
 
-LOCAL_IP = get_local_ip()
+LOCAL_IP = get_tailscale_ip()
+print("-" * 50)
+print(f"👉  http://{LOCAL_IP}:8000/api/voice")
+print("-" * 50)
 # 1. TẢI MÔ HÌNH WHISPER VÀO RAM NGAY KHI BẬT SERVER
 print("Đang nạp mô hình Whisper (Speech-to-Text) vào RAM...")
 # Bản 'small' cân bằng tốt nhất giữa tốc độ và độ chuẩn xác tiếng Việt
@@ -71,12 +71,14 @@ def process_command(request: CommandRequest):
     system_instruction = (
         "Bạn là bộ não NLP đa ngôn ngữ của hệ thống điều khiển điện thoại AIoT.\n"
         "Hãy phân tích câu lệnh của người dùng và trả về DUY NHẤT một chuỗi JSON hợp lệ "
-        "với cấu trúc: {\"action\": \"...\"}"
+        "với cấu trúc: {\"action\": \"...\",\"duration\": ...}.\n"
         "Các giá trị 'action' bắt buộc phải là 1 trong 4 trường hợp sau:\n"
         "- 'flash': nếu người dùng muốn bật/mở đèn pin, đèn flash.\n"
         "- 'record': nếu người dùng muốn thu âm, ghi âm.\n"
+        "- 'timer': nếu người dùng muốn hẹn giờ, đặt báo thức, đếm ngược thời gian.\n"
         "- 'cam': nếu người dùng muốn bật/mở camera, máy ảnh, chụp hình.\n"
         "- 'non-op function': dành cho các câu chào hỏi hoặc các chức năng không nằm trong 3 lệnh trên.\n"
+        "Trường 'duration' chỉ cần thiết khi 'action' là 'timer', và giá trị của nó sẽ là số giây mà người dùng muốn hẹn giờ.\n"
         "Không được phép trả về bất kỳ giá trị nào khác ngoài 4 giá trị 'action' đã nêu trên.\n"
         "Tuyệt đối không viết thêm bất kỳ lời giải thích nào khác ngoài chuỗi JSON."
     )
@@ -96,15 +98,18 @@ def process_command(request: CommandRequest):
         ) 
         result_json = json.loads(response.json()["response"])
         action_code = result_json.get("action", "non-op function")
+        duration = result_json.get("duration", None)
         reply_dict = {
             "flash": "Đèn pin đã được bật.",
             "record": "Bắt đầu thu âm.",
+            "timer": f"Đã đặt hẹn giờ cho {duration} giây.",
             "cam": "Camera đã được bật.",
             "non-op function": "Chào bạn, lệnh này hiện tại chưa được hỗ trợ."
         }
         return {
             "action": action_code,
-            "reply": reply_dict.get(action_code, reply_dict["non-op function"])
+            "reply": reply_dict.get(action_code, reply_dict["non-op function"]),
+            "duration": duration
         }
     except Exception as e:
         print(e)
